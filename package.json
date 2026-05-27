@@ -1,0 +1,16 @@
+{
+    "name": "fluxo-de-caixa-belem-paes",
+    "version": "1.0.0",
+    "description": "PWA de fluxo de caixa para padaria artesanal",
+    "main": "index.html",
+    "scripts": {
+        "dev": "npx serve ."
+    },
+    "keywords": [
+        "pwa",
+        "fluxo-de-caixa",
+        "padaria"
+    ],
+    "author": "",
+    "license": "ISC"
+}

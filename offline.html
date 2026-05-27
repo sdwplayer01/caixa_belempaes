@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sem conexão — Caixa Padaria</title>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; background: #FAF7F2; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; text-align: center; padding: 24px; box-sizing: border-box; }
+    .icon { font-size: 4rem; margin-bottom: 16px; }
+    h1 { font-family: Georgia, serif; color: #8B5E3C; margin: 0 0 8px; font-size: 1.5rem; }
+    p { color: #6D4C41; margin: 0 0 24px; line-height: 1.6; }
+    button { background: #8B5E3C; color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 1rem; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="icon">🍞</div>
+    <h1>Você está offline</h1>
+    <p>O app precisa estar carregado ao menos uma vez<br>para funcionar sem internet.</p>
+    <button onclick="location.reload()">Tentar novamente</button>
+  </div>
+</body>
+</html>

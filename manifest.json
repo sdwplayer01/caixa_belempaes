@@ -1,0 +1,15 @@
+{
+  "name": "Padaria — Fluxo de Caixa",
+  "short_name": "Caixa Padaria",
+  "description": "Controle financeiro para padaria artesanal",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#8B5E3C",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "categories": ["finance", "productivity"],
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

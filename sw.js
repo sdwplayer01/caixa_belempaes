@@ -1,6 +1,5 @@
 const CACHE_NAME = 'padaria-caixa-v3'
 
-// Derive base path dynamically so this works on any subpath (e.g. GitHub Pages)
 const BASE = self.location.pathname.replace(/\/sw\.js$/, '')
 
 const PRECACHE_PATHS = [
@@ -32,7 +31,6 @@ const PRECACHE_PATHS = [
 
 const PRECACHE_URLS = PRECACHE_PATHS.map(p => BASE + p)
 
-// Cache each URL individually so one 404 doesn't break the entire precache
 async function precacheAll(cache) {
   const results = await Promise.allSettled(
     PRECACHE_URLS.map(url =>

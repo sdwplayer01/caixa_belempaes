@@ -10,12 +10,25 @@ const ITEMS = [
 
 export function renderNav() {
   const nav = document.getElementById('app-nav')
-  nav.innerHTML = ITEMS.map(item => `
-    <button class="nav-item ${item.cta ? 'nav-item--cta' : ''}" data-hash="${item.hash}" aria-label="${item.label}">
-      <i data-lucide="${item.icon}" width="22" height="22"></i>
-      <span>${item.label}</span>
-    </button>
-  `).join('')
+  nav.innerHTML = ITEMS.map(item => {
+    if (item.cta) {
+      return `
+        <button class="nav-item nav-item--cta" data-hash="${item.hash}" aria-label="${item.label}">
+          <div class="nav-cta-bubble">
+            <i data-lucide="${item.icon}" width="24" height="24"></i>
+          </div>
+          <span>${item.label}</span>
+        </button>
+      `
+    }
+    return `
+      <button class="nav-item" data-hash="${item.hash}" aria-label="${item.label}">
+        <i data-lucide="${item.icon}" width="22" height="22"></i>
+        <span>${item.label}</span>
+      </button>
+    `
+  }).join('')
+
   if (window.lucide) window.lucide.createIcons()
 
   nav.addEventListener('click', (e) => {

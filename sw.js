@@ -1,4 +1,4 @@
-const CACHE_NAME = 'padaria-caixa-v2'
+const CACHE_NAME = 'padaria-caixa-v3'
 
 // Derive base path dynamically so this works on any subpath (e.g. GitHub Pages)
 const BASE = self.location.pathname.replace(/\/sw\.js$/, '')
@@ -17,7 +17,6 @@ const PRECACHE_PATHS = [
   '/js/utils.js',
   '/js/auth.js',
   '/js/views/dashboard.js',
-  '/js/views/lancamentos.js',
   '/js/views/historico.js',
   '/js/views/contas-receber.js',
   '/js/views/contas-pagar.js',
@@ -33,12 +32,24 @@ const PRECACHE_PATHS = [
 
 const PRECACHE_URLS = PRECACHE_PATHS.map(p => BASE + p)
 
+// Cache each URL individually so one 404 doesn't break the entire precache
+async function precacheAll(cache) {
+  const results = await Promise.allSettled(
+    PRECACHE_URLS.map(url =>
+      fetch(url).then(res => {
+        if (res.ok) return cache.put(url, res)
+      })
+    )
+  )
+  const failed = results.filter(r => r.status === 'rejected')
+  if (failed.length) console.warn('SW: falha ao cachear', failed.length, 'recurso(s)')
+}
+
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE_URLS))
+      .then(cache => precacheAll(cache))
       .then(() => self.skipWaiting())
-      .catch(err => console.warn('SW precache parcial:', err))
   )
 })
 
@@ -58,8 +69,10 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(cached => {
       if (cached) return cached
       return fetch(event.request).then(response => {
-        const clone = response.clone()
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone))
+        if (response.ok) {
+          const clone = response.clone()
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone))
+        }
         return response
       }).catch(() => caches.match(BASE + '/offline.html'))
     })

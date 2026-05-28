@@ -69,6 +69,22 @@ body {
 .period-nav__btn { width: 44px; height: 44px; border-radius: var(--radius-full); border: 2px solid var(--color-border); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--color-primary); }
 .period-nav__label { font: 700 1.125rem/1 var(--font-display); color: var(--color-text); }
 
+/* ── Filter pill group (container agrupado) ── */
+.filter-bar--group {
+  display: inline-flex; align-items: center; gap: 2px;
+  padding: 4px; border-radius: var(--radius-md);
+  background: var(--color-surface); border: 1px solid var(--border-default);
+  margin-bottom: var(--space-4);
+}
+.filter-bar--group .filter-pill {
+  border: 1px solid transparent; background: transparent;
+  border-radius: calc(var(--radius-md) - 4px); min-height: 34px;
+}
+.filter-bar--group .filter-pill--active {
+  background: rgba(139,94,60,.10); color: var(--color-primary);
+  border-color: var(--border-strong);
+}
+
 /* ── Configurações ── */
 .settings-section { margin-bottom: var(--space-6); }
 .settings-section__title { font: 600 .75rem/1 var(--font-body); color: var(--color-text-muted); letter-spacing: .06em; text-transform: uppercase; margin-bottom: var(--space-3); padding: 0 var(--space-1); }

@@ -15,7 +15,7 @@ export function renderNav() {
       return `
         <button class="nav-item nav-item--cta" data-hash="${item.hash}" aria-label="${item.label}">
           <div class="nav-cta-bubble">
-            <i data-lucide="${item.icon}" width="24" height="24"></i>
+            <i data-lucide="${item.icon}" width="24" height="24" stroke-width="2.2"></i>
           </div>
           <span>${item.label}</span>
         </button>
@@ -23,7 +23,7 @@ export function renderNav() {
     }
     return `
       <button class="nav-item" data-hash="${item.hash}" aria-label="${item.label}">
-        <i data-lucide="${item.icon}" width="22" height="22"></i>
+        <i data-lucide="${item.icon}" width="22" height="22" stroke-width="1.8"></i>
         <span>${item.label}</span>
       </button>
     `
@@ -49,6 +49,12 @@ export function renderNav() {
 function atualizarNavAtivo() {
   const current = location.hash || '#dashboard'
   document.querySelectorAll('.nav-item').forEach(btn => {
-    btn.classList.toggle('nav-item--active', btn.dataset.hash === current)
+    const isActive = btn.dataset.hash === current
+    btn.classList.toggle('nav-item--active', isActive)
+    const icon = btn.querySelector('i[data-lucide]')
+    if (icon && !btn.classList.contains('nav-item--cta')) {
+      icon.setAttribute('stroke-width', isActive ? '2.2' : '1.8')
+    }
   })
+  if (window.lucide) window.lucide.createIcons()
 }

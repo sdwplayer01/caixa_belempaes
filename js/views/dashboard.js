@@ -1,6 +1,6 @@
 import { db } from '../db.js'
 import { state, atualizarHeader, abrirFormLancamento } from '../app.js'
-import { formatMoeda, formatData, calcularKPIs, saudacao, agruparPorData } from '../utils.js'
+import { formatMoeda, formatData, calcularKPIs, saudacao, labelStatus } from '../utils.js'
 
 export async function renderDashboard() {
   const nome = state.config.nome_proprietaria || 'Maria'
@@ -96,7 +96,7 @@ function renderRecentes(movs) {
     return
   }
 
-  const cats = Object.fromEntries((window._state?.categorias || []).map(c => [c.id, c]))
+  const cats = Object.fromEntries((state.categorias || []).map(c => [c.id, c]))
 
   lista.innerHTML = movs.map(m => {
     const cat = cats[m.categoria] || {}
@@ -119,6 +119,3 @@ function renderRecentes(movs) {
   }).join('')
 }
 
-function labelStatus(s) {
-  return { pago:'Pago', pendente:'Pendente', vencido:'Vencido', fiado:'Fiado', parcial:'Parcial', cancelado:'Cancelado', agendado:'Agendado' }[s] || s
-}

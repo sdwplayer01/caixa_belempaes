@@ -36,6 +36,13 @@
   border-radius: var(--radius-full); font: 600 .6875rem/1 var(--font-body);
   letter-spacing: .04em; white-space: nowrap;
 }
+.status-chip--vencido::before,
+.status-chip--pendente::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  display: inline-block; margin-right: 4px; flex-shrink: 0;
+}
+.status-chip--vencido::before  { background: var(--color-vencido);  animation: dot-pulse 1.4s ease-in-out infinite; }
+.status-chip--pendente::before { background: var(--color-pendente); animation: dot-pulse 2s ease-in-out infinite; }
 .status-chip--pago      { background: var(--color-entrada-bg); color: var(--color-entrada); }
 .status-chip--pendente  { background: var(--color-pendente-bg); color: var(--color-pendente); }
 .status-chip--vencido   { background: var(--color-vencido-bg); color: var(--color-vencido); }
@@ -125,7 +132,8 @@
   background: var(--color-surface); color: var(--color-text);
   font: 400 1rem/1 var(--font-body); transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
-.form-input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(139,94,60,.12); }
+.form-input:focus { outline: none; border-color: var(--color-primary); box-shadow: var(--focus-ring); }
+.form-input { background: var(--color-input); }
 .form-input--currency { font: 600 1.375rem/1 var(--font-body); text-align: right; }
 textarea.form-input { min-height: 80px; resize: vertical; line-height: 1.5; }
 
@@ -245,9 +253,14 @@ textarea.form-input { min-height: 80px; resize: vertical; line-height: 1.5; }
 
 /* ── Skeleton ── */
 .skeleton {
-  background: linear-gradient(90deg, var(--color-surface-2) 25%, var(--color-border) 50%, var(--color-surface-2) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-shimmer 1.2s infinite;
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-2) 0%,
+    rgba(255,255,255,.55) 50%,
+    var(--color-surface-2) 100%
+  );
+  background-size: 400px 100%;
+  animation: shimmer 1.6s linear infinite;
   border-radius: var(--radius-md);
 }
 .skeleton--text  { height: 14px; margin-bottom: 8px; }
@@ -374,9 +387,34 @@ textarea.form-input { min-height: 80px; resize: vertical; line-height: 1.5; }
 @keyframes spin        { to { transform: rotate(360deg); } }
 @keyframes float       { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes pulse-red   { 0%,100% { box-shadow: 0 0 0 0 rgba(155,34,38,.3); } 50% { box-shadow: 0 0 0 8px rgba(155,34,38,0); } }
-@keyframes skeleton-shimmer { to { background-position: -200% 0; } }
+@keyframes shimmer     { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+@keyframes dot-pulse   { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.65); } }
 @keyframes slide-in-view { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-.view-enter { animation: slide-in-view .25s ease; }
+.view-enter        { animation: slide-in-view .25s ease; }
+.animate-dot-pulse { animation: dot-pulse 1.6s ease-in-out infinite; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-default); border-radius: 999px; }
+*                          { scrollbar-width: thin; scrollbar-color: var(--border-default) transparent; }
+
+/* ── Tabular numbers (financial values) ── */
+.tabular,
+.kpi-card__value,
+.mov-item__value,
+.conta-item__value,
+.summary-bar__value,
+.view-header__amount { font-variant-numeric: tabular-nums; }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .animate-dot-pulse,
+  .status-chip--vencido::before,
+  .status-chip--pendente::before,
+  .loading-screen__icon { animation: none !important; }
+}
 
 /* ── Login Screen ── */
 .login-screen {
@@ -462,6 +500,7 @@ textarea.form-input { min-height: 80px; resize: vertical; line-height: 1.5; }
   display: flex; align-items: center; justify-content: center;
 }
 .pin-key:active { background: var(--color-surface-2); transform: scale(.95); box-shadow: none; }
+.pin-key:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 .pin-key--empty { background: transparent; border-color: transparent; box-shadow: none; cursor: default; }
 
 /* Lock button in header */

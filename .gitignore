@@ -1,6 +1,38 @@
+# Dependências
 node_modules/
+
+# Sistema operacional
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Banco local de memória (gerado pelo sistema de agentes)
 ruvector.db
+
+# Logs
 *.log
+npm-debug.log*
+
+# Variáveis de ambiente
+.env
+.env.local
+.env.*.local
+
+# Build (caso seja adicionado no futuro)
+dist/
+build/
+
+# Arquivos temporários e backup
+*.tmp
+*.bak
+*.orig
+
+# Configurações locais do Claude Code (permissões de sessão)
+.claude/settings.local.json
+
+# Pacotes de skill binários (instalados via .claude/skills/)
+*.skill
+
+# Ferramentas de desenvolvimento externas
 .gemini/
+.cursor/

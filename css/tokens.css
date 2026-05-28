@@ -2,7 +2,14 @@
   --color-bg:           #FAF7F2;
   --color-surface:      #FFFFFF;
   --color-surface-2:    #F3EDE3;
+  --color-surface-3:    #EDE5D8;
+  --color-surface-hover:#E5D9C8;
+  --color-input:        #F7F2EA;
   --color-border:       #E8DDD0;
+  --border-subtle:      rgba(139,94,60,.08);
+  --border-default:     rgba(139,94,60,.14);
+  --border-strong:      rgba(139,94,60,.22);
+  --focus-ring:         0 0 0 3px rgba(139,94,60,.18);
   --color-text:         #2C1810;
   --color-text-muted:   #8D6E63;
   --color-text-light:   #BCAAA4;
@@ -27,6 +34,7 @@
   --color-cancelado-bg: #F5F5F5;
 
   --font-display: 'Playfair Display', Georgia, serif;
+  --font-mono:    'JetBrains Mono', 'Courier New', monospace;
   --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
   --font-mono:    'JetBrains Mono', monospace;
 

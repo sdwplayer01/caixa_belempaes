@@ -1,35 +1,35 @@
-const CACHE_NAME = 'padaria-caixa-v3'
+const CACHE_NAME = 'padaria-caixa-v4'
 
 const BASE = self.location.pathname.replace(/\/sw\.js$/, '')
 
 const PRECACHE_PATHS = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.json',
-  '/css/reset.css',
-  '/css/tokens.css',
-  '/css/components.css',
-  '/css/layouts.css',
-  '/js/app.js',
-  '/js/db.js',
-  '/js/utils.js',
-  '/js/auth.js',
-  '/js/views/dashboard.js',
-  '/js/views/historico.js',
-  '/js/views/contas-receber.js',
-  '/js/views/contas-pagar.js',
-  '/js/views/relatorios.js',
-  '/js/views/configuracoes.js',
-  '/js/views/login.js',
-  '/js/components/nav.js',
-  '/js/components/modal.js',
-  '/js/components/toast.js',
-  '/js/components/form-lancamento.js',
-  '/icons/icon.svg',
+  '',
+  'index.html',
+  'offline.html',
+  'manifest.json',
+  'css/reset.css',
+  'css/tokens.css',
+  'css/components.css',
+  'css/layouts.css',
+  'js/app.js',
+  'js/db.js',
+  'js/utils.js',
+  'js/auth.js',
+  'js/views/dashboard.js',
+  'js/views/historico.js',
+  'js/views/contas-receber.js',
+  'js/views/contas-pagar.js',
+  'js/views/relatorios.js',
+  'js/views/configuracoes.js',
+  'js/views/login.js',
+  'js/components/nav.js',
+  'js/components/modal.js',
+  'js/components/toast.js',
+  'js/components/form-lancamento.js',
+  'icons/icon.svg',
 ]
 
-const PRECACHE_URLS = PRECACHE_PATHS.map(p => BASE + p)
+const PRECACHE_URLS = PRECACHE_PATHS.map(p => BASE + '/' + p)
 
 async function precacheAll(cache) {
   const results = await Promise.allSettled(
@@ -62,6 +62,10 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return
   if (!event.request.url.startsWith(self.location.origin)) return
+
+  // Deixa requisições de CDN externo passar direto (idb, chart.js, lucide, fonts)
+  const url = new URL(event.request.url)
+  if (url.origin !== self.location.origin) return
 
   event.respondWith(
     caches.match(event.request).then(cached => {

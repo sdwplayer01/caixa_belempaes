@@ -137,11 +137,26 @@ export function atualizarHeader(titulo, subtitulo = '') {
   if (window.lucide) window.lucide.createIcons()
 }
 
+function handleInitError(err) {
+  console.error('[app] falha na inicialização:', err)
+  const loading = document.getElementById('loading-screen')
+  if (loading) {
+    loading.innerHTML = `
+      <div class="loading-screen__content">
+        <div class="loading-screen__icon">⚠️</div>
+        <div class="loading-screen__title" style="color:var(--color-vencido)">Erro ao iniciar</div>
+        <p style="color:var(--color-text-secondary);font-size:.875rem;text-align:center;margin-top:.5rem;padding:0 1rem">${err.message || 'Tente recarregar a página.'}</p>
+        <button onclick="location.reload()" class="btn btn--primary" style="margin-top:1.5rem">Recarregar</button>
+      </div>
+    `
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (sessaoAtiva()) {
-    init()
+    init().catch(handleInitError)
   } else {
-    renderLogin(() => init())
+    renderLogin(() => init().catch(handleInitError))
   }
 })
 

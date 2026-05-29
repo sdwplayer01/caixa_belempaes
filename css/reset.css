@@ -7,3 +7,4 @@ p, h1, h2, h3, h4 { overflow-wrap: break-word; }
 button { cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 ul, ol { list-style: none; }
+[hidden] { display: none !important; }

@@ -102,13 +102,12 @@ export function renderLogin(onSuccess) {
     pin += key
     updateDots()
 
-    // Auto-submit
-    if (etapa === 'login' && pin.length >= MIN) {
-      // Try after a short tick to let the dot animate
+    // Auto-submit — só ao atingir MAX (PIN sempre tem 6 dígitos)
+    if (etapa === 'login' && pin.length === MAX) {
       await tick()
       const ok = await verificarPin(pin)
       if (ok) { el.remove(); onSuccess() }
-      else if (pin.length === MAX) erro('PIN incorreto. Tente novamente.')
+      else erro('PIN incorreto. Tente novamente.')
       return
     }
 

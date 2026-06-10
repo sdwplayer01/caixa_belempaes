@@ -1,4 +1,4 @@
-import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7/build/esm/index.js'
+import { openDB } from './vendor/idb.js'
 
 const DB_NAME = 'padaria_financeiro'
 const DB_VERSION = 1

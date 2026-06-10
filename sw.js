@@ -1,41 +1,40 @@
-const CACHE_NAME = 'padaria-caixa-v3'
-
-const BASE = self.location.pathname.replace(/\/sw\.js$/, '')
+const CACHE_VERSION = "3.1.0"
+const CACHE_NAME = `padaria-caixa-v${CACHE_VERSION}`
 
 const PRECACHE_PATHS = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.json',
-  '/css/reset.css',
-  '/css/tokens.css',
-  '/css/components.css',
-  '/css/layouts.css',
-  '/js/app.js',
-  '/js/db.js',
-  '/js/utils.js',
-  '/js/auth.js',
-  '/js/views/dashboard.js',
-  '/js/views/historico.js',
-  '/js/views/contas-receber.js',
-  '/js/views/contas-pagar.js',
-  '/js/views/relatorios.js',
-  '/js/views/configuracoes.js',
-  '/js/views/login.js',
-  '/js/components/nav.js',
-  '/js/components/modal.js',
-  '/js/components/toast.js',
-  '/js/components/form-lancamento.js',
-  '/icons/icon.svg',
+  './',
+  './index.html',
+  './offline.html',
+  './manifest.json',
+  './css/reset.css',
+  './css/tokens.css',
+  './css/components.css',
+  './css/layouts.css',
+  './js/app.js',
+  './js/db.js',
+  './js/utils.js',
+  './js/auth.js',
+  './js/views/dashboard.js',
+  './js/views/historico.js',
+  './js/views/contas-receber.js',
+  './js/views/contas-pagar.js',
+  './js/views/relatorios.js',
+  './js/views/configuracoes.js',
+  './js/views/login.js',
+  './js/components/nav.js',
+  './js/components/modal.js',
+  './js/components/toast.js',
+  './js/components/form-lancamento.js',
+  './js/vendor/idb.js',
+  './js/vendor/wrap-idb-value.js',
+  './icons/icon.svg',
 ]
-
-const PRECACHE_URLS = PRECACHE_PATHS.map(p => BASE + p)
 
 async function precacheAll(cache) {
   const results = await Promise.allSettled(
-    PRECACHE_URLS.map(url =>
-      fetch(url).then(res => {
-        if (res.ok) return cache.put(url, res)
+    PRECACHE_PATHS.map(path =>
+      fetch(path).then(res => {
+        if (res.ok) return cache.put(path, res)
       })
     )
   )
@@ -47,8 +46,13 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => precacheAll(cache))
-      .then(() => self.skipWaiting())
   )
+})
+
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting()
+  }
 })
 
 self.addEventListener('activate', event => {
@@ -72,7 +76,7 @@ self.addEventListener('fetch', event => {
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone))
         }
         return response
-      }).catch(() => caches.match(BASE + '/offline.html'))
+      }).catch(() => caches.match('./offline.html'))
     })
   )
 })
